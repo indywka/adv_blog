@@ -9,6 +9,7 @@ use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -27,7 +28,6 @@ PublicAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
 
 
 <nav class="navbar main-menu navbar-default">
@@ -49,14 +49,28 @@ PublicAsset::register($this);
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav text-uppercase">
-                    <li><a data-toggle="dropdown" class="dropdown-toggle" href="index.html">Home</a>
+                    <li><a data-toggle="dropdown" class="dropdown-toggle" href="#">Home</a>
 
                     </li>
                 </ul>
                 <div class="i_con">
                     <ul class="nav navbar-nav text-uppercase">
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Register</a></li>
+
+                        <?php if (Yii::$app->user->isGuest): ?>
+                            <li><a href="<?= Url::toRoute(['site/login']) ?>">Login</a></li>
+
+                            <li><a href="<?= Url::toRoute(['site/signup']) ?>">Register</a></li>
+
+                        <?php else: ?>
+                            <?= Html::beginForm(['/site/logout'], 'post')
+                            . Html::submitButton(
+                                'Logout (' . Yii::$app->user->identity->login . ')',
+                                ['class' => 'btn btn-link site/logout', 'style' => "padding-top:10px;"]
+                            )
+                            . Html::endForm() ?>
+                        <?php endif; ?>
+
+
                     </ul>
                 </div>
 
@@ -68,8 +82,7 @@ PublicAsset::register($this);
 </nav>
 
 
- <?= $content ?>
-
+<?= $content ?>
 
 
 <!--footer start-->
@@ -191,8 +204,8 @@ PublicAsset::register($this);
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="text-center">&copy; 2015 <a href="#">Treasure PRO, </a> Built with <i
-                                class="fa fa-heart"></i> by <a href="#">Rahim</a>
+                    <div class="text-center">&copy; Built with <i
+                                class="fa fa-heart"></i> by <a href="#">Hanna Atyasheva</a>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Blog;
+use app\models\SignupForm;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -63,26 +64,53 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $data = Blog::getAll(1);
+        $data = Blog::getAll(2);
 
-//        $recent = Blog::getRecent();
+        $recent = Blog::find()->orderBy('id desc')->limit(2)->all();
 
 
         return $this->render('index', [
             'blogs' => $data['blogs'],
             'pagination' => $data['pagination'],
-
-//            'recent' => $recent,
+            'recent' => $recent
 
         ]);
 
     }
 
 
-    public function actionView()
+    public function actionView($id)
     {
+        $blog = Blog::findOne($id);
+        $recent = Blog::find()->orderBy('id desc')->limit(2)->all();
+        return $this->render('single', [
+            'blog' => $blog,
+            'recent' => $recent,
+        ]);
+    }
 
-        return $this->render('single');
+
+    public function actionLogin()
+    {
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        return $this->render('/site/login', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
     }
 
     /**
@@ -90,34 +118,7 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
 
     /**
      * Displays contact page.
@@ -145,5 +146,22 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->signup())
+            {
+                return $this->redirect(['site/login']);
+            }
+        }
+
+        return $this->render('signup', ['model'=>$model]);
     }
 }
