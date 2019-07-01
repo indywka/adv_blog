@@ -3,12 +3,16 @@
 
 namespace app\models;
 
- use yii\base\Model;
+use yii\base\Model;
 
-class SignupForm extends Model{
+class SignupForm extends Model
+{
 
     public $login;
     public $password;
+    public $fname;
+    public $sname;
+    public $email;
 
 
     public static function tableName()
@@ -16,23 +20,27 @@ class SignupForm extends Model{
         return 'reg';
     }
 
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['login', 'password'], 'required', 'message' => 'Заполните поле'],
+            [['fname', 'sname', 'email', 'login', 'password'], 'required', 'message' => 'Заполните поле'],
         ];
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
-            'login' => 'Логин',
-            'password' => 'Пароль',
+            'fname' => 'Fname',
+            'sname' => 'Sname',
+            'email' => 'Email',
+            'login' => 'Login',
+            'password' => 'Password',
         ];
     }
 
     public function signup()
     {
-        if($this->validate())
-        {
+        if ($this->validate()) {
             $user = new User();
             $user->attributes = $this->attributes;
             return $user->create();
