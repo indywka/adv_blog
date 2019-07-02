@@ -13,7 +13,7 @@ use yii\data\Pagination;
  * @property string $pic
  * @property string $opis
  *
- * @property Comm[] $comms
+ @property Comm[] $comms
  * @property Mypage[] $mypages
  */
 class Blog extends \yii\db\ActiveRecord
@@ -100,5 +100,14 @@ class Blog extends \yii\db\ActiveRecord
 /**
      * @return \yii\db\ActiveQuery
      */
+public function getComments()
+{
+    return $this->hasMany(Comm::className(), ['id_news'=>'id']);
+}
+
+    public function getBlogComments()
+    {
+        return $this->getComments()->all();
+    }
 
 }

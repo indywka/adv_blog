@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Blog;
+use app\models\CommentForm;
 use app\models\SignupForm;
 use Yii;
 use yii\data\Pagination;
@@ -82,10 +83,15 @@ class SiteController extends Controller
     public function actionView($id)
     {
         $blog = Blog::findOne($id);
+        $comments=$blog->getBlogComments();
+        $commentForm = new CommentForm();
         $recent = Blog::find()->orderBy('id desc')->limit(2)->all();
         return $this->render('single', [
             'blog' => $blog,
             'recent' => $recent,
+            'comments'=>$comments,
+            'commentForm'=>$commentForm,
+
         ]);
     }
 
@@ -164,4 +170,23 @@ class SiteController extends Controller
 
         return $this->render('signup', ['model'=>$model]);
     }
+
+
+
+
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->saveComment($id))
+            {
+                Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
+                return $this->redirect(['site/view','id'=>$id]);
+            }
+        }
+    }
+
 }

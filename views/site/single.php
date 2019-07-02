@@ -42,45 +42,40 @@ use app\models\Blog;
                 </article>
 
 
+                <?php if(!empty($comments)):?>
 
-                <div class="bottom-comment"><!--bottom comment-->
-                    <h4>3 comments</h4>
-
-                    <div class="comment-img">
-                        <img class="img-circle" src="assets/images/comment-img.jpg" alt="">
-                    </div>
-
-                    <div class="comment-text">
-                        <a href="#" class="replay btn pull-right"> Replay</a>
-                        <h5>Rubel Miah</h5>
-
-                        <p class="comment-date">
-                            December, 02, 2015 at 5:57 PM
-                        </p>
+                    <?php foreach($comments as $comment):?>
+                        <div class="bottom-comment"><!--bottom comment-->
 
 
-                        <p class="para">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                            diam nonumy
-                            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-                            voluptua. At vero eos et cusam et justo duo dolores et ea rebum.</p>
-                    </div>
-                </div>
-                <!-- end bottom comment-->
+                            <div class="comment-text">
+
+                                <h5><?= $comment->user->login;?></h5>
+
+                                <p class="para"><?= $comment->comment; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+
+                <?php endif;?>
 
 
                 <div class="leave-comment"><!--leave comment-->
-                    <h4>Leave a reply</h4>
+
 
 
                     <form class="form-horizontal contact-form" role="form" method="post" action="#">
 
+                         <?php $form = \yii\widgets\ActiveForm::begin([
+                            'action'=>['site/comment', 'id'=>$blog->id],
+                            'options'=>['class'=>'form-horizontal contact-form', 'role'=>'form']])?>
                         <div class="form-group">
                             <div class="col-md-12">
-										<textarea class="form-control" rows="6" name="message"
-                                                  placeholder="Write Massage"></textarea>
+                                <?= $form->field($commentForm, 'comment')->textarea(['class'=>'form-control','placeholder'=>'Write Message'])->label(false)?>
                             </div>
                         </div>
-                        <a href="#" class="btn send-btn">Post Comment</a>
+                        <button type="submit" class="btn send-btn">Post Comment</button>
+                        <?php \yii\widgets\ActiveForm::end();?>
                     </form>
                 </div><!--end leave comment-->
             </div>
