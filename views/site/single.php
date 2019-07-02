@@ -59,12 +59,10 @@ use app\models\Blog;
 
                 <?php endif;?>
 
-
+                <?php if(!Yii::$app->user->isGuest):?>
                 <div class="leave-comment"><!--leave comment-->
 
-
-
-                    <form class="form-horizontal contact-form" role="form" method="post" action="#">
+<!--                   <form class="form-horizontal contact-form" role="form" method="post" action="#">-->
 
                          <?php $form = \yii\widgets\ActiveForm::begin([
                             'action'=>['site/comment', 'id'=>$blog->id],
@@ -76,8 +74,9 @@ use app\models\Blog;
                         </div>
                         <button type="submit" class="btn send-btn">Post Comment</button>
                         <?php \yii\widgets\ActiveForm::end();?>
-                    </form>
+<!--         //           </form>-->
                 </div><!--end leave comment-->
+                <?php endif;?>
             </div>
             <div class="col-md-4" data-sticky_column>
                 <div class="primary-sidebar">

@@ -61,6 +61,7 @@ PublicAsset::register($this);
                             <li><a href="<?= Url::toRoute(['site/signup']) ?>">Register</a></li>
 
                         <?php else: ?>
+
                             <?= Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton(
                                 'Logout (' . Yii::$app->user->identity->login . ')',
@@ -68,6 +69,19 @@ PublicAsset::register($this);
                             )
                             . Html::endForm() ?>
                         <?php endif; ?>
+
+
+
+                        <?php if (Yii::$app->user->identity->admin): ?>
+
+
+                            <li><a href="<?= Url::toRoute(['/admin/blog/index']) ?>">admin</a></li>
+
+
+                        <?php endif; ?>
+
+
+
 
 
                     </ul>
@@ -91,111 +105,25 @@ PublicAsset::register($this);
             <div class="col-md-4">
                 <aside class="footer-widget">
                     <div class="about-img"><img src="assets/images/logo2.png" alt=""></div>
-                    <div class="about-content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed voluptua. At vero eos et
-                        accusam et justo duo dlores et ea rebum magna text ar koto din.
+                    <div class="about-content">
                     </div>
                     <div class="address">
                         <h4 class="text-uppercase">contact Info</h4>
 
-                        <p> 14529/12 NK Streets, DC, KZ</p>
+                        <p> Belarus</p>
 
-                        <p> Phone: +123 456 78900</p>
+                        <p> Phone: +37529 258 55 48</p>
 
-                        <p>mytreasure.com</p>
+                        <p>adventureblog.com</p>
                     </div>
                 </aside>
             </div>
 
             <div class="col-md-4">
-                <aside class="footer-widget">
-                    <h3 class="widget-title text-uppercase">Testimonials</h3>
 
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!--Indicator-->
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner" role="listbox">
-                            <div class="item active">
-                                <div class="single-review">
-                                    <div class="review-text">
-                                        <p>Lorem ipsum dolor sit amet, conssadipscing elitr, sed diam nonumy eirmod
-                                            tempvidunt ut labore et dolore magna aliquyam erat,sed diam voluptua. At
-                                            vero eos et accusam justo duo dolores et ea rebum.gubergren no sea takimata
-                                            magna aliquyam eratma</p>
-                                    </div>
-                                    <div class="author-id">
-                                        <img src="assets/images/author.png" alt="">
-
-                                        <div class="author-text">
-                                            <h4>Sophia</h4>
-
-                                            <h4>CEO, ReadyTheme</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="single-review">
-                                    <div class="review-text">
-                                        <p>Lorem ipsum dolor sit amet, conssadipscing elitr, sed diam nonumy eirmod
-                                            tempvidunt ut labore et dolore magna aliquyam erat,sed diam voluptua. At
-                                            vero eos et accusam justo duo dolores et ea rebum.gubergren no sea takimata
-                                            magna aliquyam eratma</p>
-                                    </div>
-                                    <div class="author-id">
-                                        <img src="assets/images/author.png" alt="">
-
-                                        <div class="author-text">
-                                            <h4>Sophia</h4>
-
-                                            <h4>CEO, ReadyTheme</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="single-review">
-                                    <div class="review-text">
-                                        <p>Lorem ipsum dolor sit amet, conssadipscing elitr, sed diam nonumy eirmod
-                                            tempvidunt ut labore et dolore magna aliquyam erat,sed diam voluptua. At
-                                            vero eos et accusam justo duo dolores et ea rebum.gubergren no sea takimata
-                                            magna aliquyam eratma</p>
-                                    </div>
-                                    <div class="author-id">
-                                        <img src="assets/images/author.png" alt="">
-
-                                        <div class="author-text">
-                                            <h4>Sophia</h4>
-
-                                            <h4>CEO, ReadyTheme</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </aside>
             </div>
             <div class="col-md-4">
-                <aside class="footer-widget">
-                    <h3 class="widget-title text-uppercase">Custom Category Post</h3>
 
-
-                    <div class="custom-post">
-                        <div>
-                            <a href="#"><img src="assets/images/footer-img.png" alt=""></a>
-                        </div>
-                        <div>
-                            <a href="#" class="text-uppercase">Home is peaceful Place</a>
-                            <span class="p-date">February 15, 2016</span>
-                        </div>
-                    </div>
-                </aside>
             </div>
         </div>
     </div>
